@@ -88,7 +88,7 @@
 
     .status {
       display: flex;
-      align-items: center;
+      align-items: start;
       justify-content: center;
       flex-direction: column;
     }
@@ -103,7 +103,6 @@
     .status .desc p {
       font-size: 1.5em;
       font-weight: lighter;
-      text-transform: uppercase;
     }
 
     /* Show details when enabled */
@@ -135,10 +134,10 @@
   <main>
     <div class="status">
       <div class="code">
-        <h1>{{ code }}</h1>
+        <h1>{{ code }} {{ message }}</h1>
       </div>
       <div class="desc">
-        <p>{{ message }}</p>
+        <p>{{ description }}</p>
       </div>
 
       <!-- Show additional details if enabled -->
