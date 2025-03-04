@@ -22,6 +22,24 @@
     <meta property="twitter:description" content="{{ description | escape }}" />
 
     <style>
+
+      :root {
+        --gradient-start: #fff;
+        --gradient-end: #d2d2d2;
+        --color-primary: #000;
+        --color-secondary: #474747;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --gradient-start: #333;
+          --gradient-end: #222;
+          --color-primary: #f1f1f1;
+          --color-secondary: #bbb;
+        }
+      }
+
+
       * {
         margin: 0;
         padding: 0;
@@ -29,11 +47,11 @@
       }
 
       body {
-        background: linear-gradient(180deg, #fff 0%, #d2d2d2 100%);
+        background: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
         height: 100vh;
         width: 100vw;
         display: flex;
-        color: #000;
+        color: var(--color-primary);
         font-family: "Atlas Grotesk", sans-serif;
         font-size: 16px;
         padding: 3rem 4rem;
@@ -70,7 +88,7 @@
       }
 
       p {
-        color: #474747;
+        color: var(--color-secondary);
         font-style: normal;
         font-weight: 200;
         line-height: normal;
@@ -78,7 +96,7 @@
       }
 
       .hfgd {
-        color: #000;
+        color: var(--color-primary);
         font-style: normal;
         font-weight: 500;
         line-height: normal;
@@ -86,7 +104,7 @@
       }
 
       .logo {
-        color: #000;
+        color: var(--color-primary);
       font-family: "Atlas Grotesk";
       font-style: normal;
       }
@@ -129,23 +147,6 @@
 
       ul.details li.name {
         font-weight: bold;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        body {
-          background: linear-gradient(180deg, #333 0, #222 100%);
-          color: #f1f1f1;
-        }
-        h1 {
-          color: #fff;
-        }
-        p {
-          color: #bbb;
-        }
-        .hfgd,
-        .logo {
-          color: #ddd;
-        }
       }
 
       /* {{ end }} */
