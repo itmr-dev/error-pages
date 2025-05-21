@@ -99,4 +99,4 @@ HEALTHCHECK --interval=10s --start-interval=1s --start-period=5s --timeout=2s CM
 
 ENTRYPOINT ["/bin/error-pages"]
 
-CMD ["serve"]
+CMD ["serve", '--template-name="itmr-dev"']

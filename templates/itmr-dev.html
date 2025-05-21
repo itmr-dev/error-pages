@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="nofollow,noarchive,noindex" />
+    <title>{{ code }}: {{ message }} - itmr.dev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Auto-refresh for specific status codes -->
+    <!-- {{ if or (eq code 408) (eq code 425) (eq code 429) (eq code 500) (eq code 502) (eq code 503) (eq code 504) }} -->
+    <meta http-equiv="refresh" content="30" />
+    <!-- {{ end }} -->
+
+    <meta name="title" content="{{ code }}: {{ message | escape }}" />
+    <meta name="description" content="{{ description | escape }}" />
+    <meta property="og:title" content="{{ code }}: {{ message | escape }}" />
+    <meta property="og:description" content="{{ description | escape }}" />
+    <meta
+      property="twitter:title"
+      content="{{ code }}: {{ message | escape }}"
+    />
+    <meta property="twitter:description" content="{{ description | escape }}" />
+
+    <style>
+
+      :root {
+        --gradient-start: #fff;
+        --gradient-end: #d2d2d2;
+        --color-primary: #000;
+        --color-secondary: #474747;
+        --color-accent: #e3f1f2;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --gradient-start: #333;
+          --gradient-end: #222;
+          --color-primary: #f1f1f1;
+          --color-secondary: #bbb;
+          --color-accent: #e2ecec;
+        }
+      }
+
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: url('https://cdn.l4b.dev/images/clouds.jpg') no-repeat center center fixed;
+        background-size: cover;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        color: var(--color-primary);
+        font-family: "Atlas Grotesk", sans-serif;
+        font-size: 16px;
+        padding: 3rem 4rem;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2rem;
+        gap: 4rem;
+      }
+
+      main > div {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      main > div > svg {
+        width: 200px;
+        height: auto;
+        padding-top: 1rem;
+      }
+
+      h1 {
+        font-size: 3.5em;
+        line-height: 1;
+        font-family: Poppins,sans-serif;
+      }
+
+      p {
+        color: var(--color-secondary);
+        font-style: normal;
+        font-weight: 200;
+        line-height: normal;
+        font-size: 18pt;
+      }
+
+      .hfgd {
+        color: var(--color-primary);
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        font-size: 16pt;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        vertical-align: middle;
+      }
+
+      .logo {
+        height: 20px;
+      }
+
+      .invisible {
+      color:transparent;
+    }
+
+      .status {
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .status .code h1 {
+        font-size: 2em;
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+      }
+
+      .status .desc p {
+        font-size: 1.5em;
+        font-weight: lighter;
+      }
+
+      /* Show details when enabled */
+      /* {{ if show_details }} */
+      ul.details {
+        list-style: none;
+        margin: 1.2em 0 0 0;
+        padding: 0;
+        font-size: 0.8em;
+      }
+
+      ul.details li {
+        font-family: monospace;
+      }
+
+      ul.details li.name {
+        font-weight: bold;
+      }
+
+      a {
+        /* color: var(--color-accent); */
+        color: inherit;
+        text-decoration: none;
+        font-weight: 400;
+      }
+
+      .footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        cursor: default;
+      }
+
+      /* {{ end }} */
+    </style>
+  </head>
+  <body>
+    <span class="hfgd">
+      <img class="logo" src="https://cdn.l4b.dev/images/logo.svg" alt="itmr.dev">
+      ITMR Developments
+    </span>
+
+    <main>
+      <div class="status">
+        <div class="code">
+          <h1>Got your head in the clouds?</h1>
+        </div>
+        <div class="desc">
+          <p>
+            {{ code }} {{ message }}
+            <br>
+            {{ description }}
+          </p>
+        </div>
+
+        <!-- Show additional details if enabled -->
+        <!-- {{ if show_details }} -->
+        <ul class="details">
+          <!-- {{ if host }} -->
+          <li class="name">Host:</li>
+          <li class="value">{{ host }}</li>
+          <!-- {{ end }} -->
+          <!-- {{ if original_uri }} -->
+          <li class="name">Original URI:</li>
+          <li class="value">{{ original_uri }}</li>
+          <!-- {{ end }} -->
+          <!-- {{ if forwarded_for }} -->
+          <li class="name">Forwarded for:</li>
+          <li class="value">{{ forwarded_for }}</li>
+          <!-- {{ end }} -->
+          <!-- {{ if namespace }} -->
+          <li class="name">Namespace:</li>
+          <li class="value">{{ namespace }}</li>
+          <!-- {{ end }} -->
+          <!-- {{ if ingress_name }} -->
+          <li class="name">Ingress name:</li>
+          <li class="value">{{ ingress_name }}</li>
+          <!-- {{ end }} -->
+          <!-- {{ if service_name }} -->
+          <li class="name">Service name:</li>
+          <li class="value">{{ service_name }}</li>
+          <!-- {{ end }} -->
+          <!-- {{ if service_port }} -->
+          <li class="name">Service port:</li>
+          <li class="value">{{ service_port }}</li>
+          <!-- {{ end }} -->
+          <!-- {{ if request_id }} -->
+          <li class="name">Request ID:</li>
+          <li class="value">{{ request_id }}</li>
+          <!-- {{ end }} -->
+          <li class="name">Timestamp:</li>
+          <li class="value">{{ nowUnix }}</li>
+        </ul>
+        <!-- {{ end }} -->
+      </div>
+
+    </main>
+
+    <span>
+      <div class="footer">
+        <a href="https://status.itmr-dev.de/" target="_blank" rel="noopener noreferrer">
+          <span id="status-dot" style="display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px;"></span>
+          <span id="status-text"></span>
+        </a>
+        <div>
+          <a href="https://itmr.dev/" target="_blank" rel="noopener noreferrer">itmr.dev</a>
+          –
+          <a href="https://itmr.cloud/" target="_blank" rel="noopener noreferrer">itmr.cloud</a>
+          –
+          <a href="https://itmr-dev.de/impressum.html" target="_blank" rel="noopener noreferrer">imprint</a>
+        </div>
+      </div>
+    </span>
+
+
+    <script>
+      fetch('https://itmr-dev.statuspage.io/api/v2/status.json')
+        .then(response => response.json())
+        .then(data => {
+          const statusTextElement = document.getElementById('status-text');
+          const statusDotElement = document.getElementById('status-dot');
+          const statusDescription = data.status.description.toLowerCase();
+          statusTextElement.innerText = statusDescription;
+    
+          // Determine the dot color based on the status.
+          // If your API provides a status indicator, you might use that.
+          // Here, we assume possible values like "none", "minor", "major".
+          let color = 'gray'; // default color if no match
+          if(data.status.indicator) {
+            switch(data.status.indicator) {
+              case "none":
+                color = "green";
+                break;
+              case "minor":
+                color = "yellow";
+                break;
+              case "major":
+                color = "red";
+                break;
+              default:
+                color = "gray";
+            }
+          } else {
+            // Fallback based on description text
+            const lowerDesc = statusDescription.toLowerCase();
+            if(lowerDesc.includes("operational")) {
+              color = "green";
+            } else if(lowerDesc.includes("partial")) {
+              color = "orange";
+            } else if(lowerDesc.includes("major")) {
+              color = "red";
+            }
+          }
+          statusDotElement.style.backgroundColor = color;
+        })
+        .catch(error => {
+          console.error('Error fetching status:', error);
+          document.getElementById('status-text').innerText = 'Status unavailable';
+          document.getElementById('status-dot').style.backgroundColor = 'gray';
+        });
+    </script>
+    
+
+    <!-- Localization script if enabled -->
+    <!-- {{ if l10n_enabled }} -->
+    <script>
+      // {{ l10nScript }}
+    </script>
+    <!-- {{ end }} -->
+  </body>
+</html>
