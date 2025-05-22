@@ -24,11 +24,11 @@
     <style>
 
       :root {
-        --gradient-start: #fff;
-        --gradient-end: #d2d2d2;
-        --color-primary: #000;
-        --color-secondary: #474747;
-        --color-accent: #e3f1f2;
+        --gradient-start: #333;
+        --gradient-end: #222;
+        --color-primary: #f1f1f1;
+        --color-secondary: #d2d2d2;
+        --color-accent: #cdd6e8;
       }
 
       @media (prefers-color-scheme: dark) {
@@ -36,8 +36,8 @@
           --gradient-start: #333;
           --gradient-end: #222;
           --color-primary: #f1f1f1;
-          --color-secondary: #bbb;
-          --color-accent: #e2ecec;
+          --color-secondary: #d2d2d2;
+          --color-accent: #cdd6e8;
         }
       }
 
@@ -96,6 +96,10 @@
         font-size: 18pt;
       }
 
+      span {
+        color: var(--color-secondary);
+      }
+
       .hfgd {
         color: var(--color-primary);
         font-style: normal;
@@ -135,9 +139,9 @@
         font-weight: lighter;
       }
 
-      a {
-        /* color: var(--color-accent); */
+      .link, a {
         color: inherit;
+        color: var(--color-primary);
         text-decoration: none;
         font-weight: 400;
       }
@@ -171,8 +175,6 @@
   </head>
   <body>
     <span class="hfgd">
-      <img class="logo" src="https://cdn.l4b.dev/images/logo.svg" alt="itmr.dev">
-      ITMR Developments
     </span>
 
     <main>
@@ -233,16 +235,15 @@
 
     <span>
       <div class="footer">
-        <a href="https://status.itmr-dev.de/" target="_blank" rel="noopener noreferrer">
-          <span id="status-dot" style="display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px;"></span>
-          <span id="status-text"></span>
-        </a>
         <div>
-          <a href="https://itmr.dev/" target="_blank" rel="noopener noreferrer">itmr.dev</a>
-          –
-          <a href="https://itmr.cloud/" target="_blank" rel="noopener noreferrer">itmr.cloud</a>
-          –
-          <a href="https://itmr-dev.de/impressum.html" target="_blank" rel="noopener noreferrer">imprint</a>
+          This error page is provided by 
+          <a href="https://itmr-dev.de/" target="_blank" rel="noopener noreferrer">itmr.dev</a>
+        </div>
+        <div>
+          <a href="https://status.itmr-dev.de/" target="_blank" rel="noopener noreferrer">
+            <span id="status-dot" style="display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px;"></span>
+            <span id="status-text" class="link"></span>
+          </a>
         </div>
       </div>
     </span>
