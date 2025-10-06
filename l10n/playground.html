@@ -105,7 +105,7 @@
     'Request ID', 'Timestamp', 'client-side error', 'server-side error', 'Your Client', 'Network', 'Web Server',
     'What happened?', 'What can i do?', 'Please try again in a few minutes', 'Working', 'Unknown',
     'Please try to change the request method, headers, payload, or URL', 'Please check your authorization data',
-    'Please double-check the URL and try again',
+    'Please double-check the URL and try again', 'My Computer', 'My Documents', 'Start',
   ].forEach((token) => {
     const $li = document.createElement('li');
 
@@ -118,8 +118,8 @@
 
   const $langSwitch = document.getElementById('lang-switch');
 
-  ['fr', 'ru', 'uk', 'pt', 'nl', 'de', 'es', 'zh', 'id', 'pl', 'ko' ].forEach((lang) => {
-    //                                                            ^^^ add your newly added locale here
+  ['fr', 'ru', 'uk', 'pt', 'nl', 'de', 'es', 'zh', 'id', 'pl', 'ko', 'hu', 'no', 'ro' ].forEach((lang) => {
+    //                                                                        ^^^ add your newly added locale here
     const $li = document.createElement('li');
     const $btn = document.createElement('button');
 

@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"net/url"
 	"strings"
 	"time"
 
@@ -74,7 +73,7 @@ func NewCommand(log *logger.Logger) *cli.Command { //nolint:funlen,gocognit,gocy
 		}
 		templateNameFlag = cli.StringFlag{
 			Name:    "template-name",
-			Aliases: []string{"t"},
+			Aliases: []string{"t", "template", "theme"},
 			Value:   cfg.TemplateName,
 			Usage: "Name of the template to use for rendering error pages (built-in templates: " +
 				strings.Join(cfg.Templates.Names(), ", ") + ")",
@@ -86,10 +85,10 @@ func NewCommand(log *logger.Logger) *cli.Command { //nolint:funlen,gocognit,gocy
 		defaultCodeToRenderFlag = cli.UintFlag{
 			Name:     "default-error-page",
 			Usage:    "The code of the default (index page, when a code is not specified) error page to render",
-			Value:    uint64(cfg.DefaultCodeToRender),
+			Value:    uint(cfg.DefaultCodeToRender),
 			Sources:  env("DEFAULT_ERROR_PAGE"),
 			Category: shared.CategoryCodes,
-			Validator: func(code uint64) error {
+			Validator: func(code uint) error {
 				if code > 999 { //nolint:mnd
 					return fmt.Errorf("wrong HTTP code [%d] for the default error page", code)
 				}
@@ -177,7 +176,7 @@ func NewCommand(log *logger.Logger) *cli.Command { //nolint:funlen,gocognit,gocy
 		Action: func(ctx context.Context, c *cli.Command) error {
 			cmd.opt.http.addr = c.String(addrFlag.Name)
 			cmd.opt.http.port = uint16(c.Uint(portFlag.Name)) //nolint:gosec
-			cmd.opt.http.readBufferSize = uint(c.Uint(readBufferSizeFlag.Name))
+			cmd.opt.http.readBufferSize = c.Uint(readBufferSizeFlag.Name)
 			cfg.L10n.Disable = c.Bool(disableL10nFlag.Name)
 			cfg.DefaultCodeToRender = uint16(c.Uint(defaultCodeToRenderFlag.Name)) //nolint:gosec
 			cfg.RespondWithSameHTTPCode = c.Bool(sendSameHTTPCodeFlag.Name)
@@ -221,7 +220,7 @@ func NewCommand(log *logger.Logger) *cli.Command { //nolint:funlen,gocognit,gocy
 					m[http.CanonicalHeaderKey(strings.TrimSpace(header))] = struct{}{}
 				}
 
-				clear(cfg.ProxyHeaders) // clear the list before adding new headers
+				cfg.ProxyHeaders = make([]string, 0, len(m)) // clear the list before adding new headers
 
 				for header := range m {
 					cfg.ProxyHeaders = append(cfg.ProxyHeaders, header)
@@ -322,40 +321,6 @@ func (cmd *command) Run(ctx context.Context, log *logger.Logger, cfg *config.Con
 
 	var startingErrCh = make(chan error, 1) // channel for server starting error
 	defer close(startingErrCh)
-
-	// to track the frequency of each template's use, we send a simple GET request to the GoatCounter API
-	// (https://goatcounter.com, https://github.com/arp242/goatcounter) to increment the counter. this service is
-	// free and does not require an API key. no private data is sent, as shown in the URL below. this is necessary
-	// to render a badge displaying the number of template usages on the error-pages repository README file :D
-	//
-	// badge code example:
-	//	![Used times](https://img.shields.io/badge/dynamic/json?
-	//		url=https%3A%2F%2Ferror-pages.goatcounter.com%2Fcounter%2F%2Fuse-template%2Flost-in-space.json
-	//		&query=%24.count&label=Used%20times)
-	//
-	// if you wish, you may view the collected statistics at any time here - https://error-pages.goatcounter.com/
-	go func() {
-		var tpl = url.QueryEscape(cfg.TemplateName)
-
-		req, reqErr := http.NewRequestWithContext(ctx, http.MethodGet, fmt.Sprintf(
-			// https://www.goatcounter.com/help/pixel
-			"https://error-pages.goatcounter.com/count?p=/use-template/%s&t=%s", tpl, tpl,
-		), http.NoBody)
-		if reqErr != nil {
-			return
-		}
-
-		req.Header.Set("User-Agent", fmt.Sprintf("Mozilla/5.0 (error-pages, rnd:%d)", time.Now().UnixNano()))
-
-		resp, respErr := (&http.Client{Timeout: 10 * time.Second}).Do(req) //nolint:mnd // don't care about the response
-		if respErr != nil {
-			log.Debug("Cannot send a request to increment the template usage counter", logger.Error(respErr))
-
-			return
-		} else if resp != nil {
-			_ = resp.Body.Close()
-		}
-	}()
 
 	// start HTTP server in separate goroutine
 	go func(errCh chan<- error) {

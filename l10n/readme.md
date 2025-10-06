@@ -29,3 +29,6 @@ different locales, please follow these steps:
 - 🇮🇩 Indonesian by [@getwisp](https://github.com/getwisp)
 - 🇵🇱 Polish by [@wielorzeczownik](https://github.com/wielorzeczownik)
 - 🇰🇷 Korean by [@NavyStack](https://github.com/NavyStack)
+- 🇭🇺 Hungarian by [@oszto90](https://github.com/oszto90)
+- 🇳🇴 Norwegian by [@EliasTors](https://github.com/EliasTors)
+- 🇷🇴 Romanian by [@pasarenicu](https://github.com/pasarenicu)
