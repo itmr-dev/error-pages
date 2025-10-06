@@ -92,11 +92,12 @@ WORKDIR /opt
 # with the `--help` flag or refer to the documentation at https://github.com/tarampampam/error-pages#readme
 
 ENV LOG_LEVEL="warn" \
-    LOG_FORMAT="json"
+    LOG_FORMAT="json" \
+    TEMPLATE_NAME="itmr-dev-neutral"
 
 # docs: https://docs.docker.com/reference/dockerfile/#healthcheck
 HEALTHCHECK --interval=10s --start-interval=1s --start-period=5s --timeout=2s CMD ["/bin/error-pages", "healthcheck"]
 
 ENTRYPOINT ["/bin/error-pages"]
 
-CMD ["serve", "-t", "itmr-dev"]
+CMD ["serve"]
